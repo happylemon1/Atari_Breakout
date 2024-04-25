@@ -1,2 +1,2 @@
-# Akari-Breakout
+# Atari-Breakout
 Test
