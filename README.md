@@ -1,4 +1,2 @@
 # Atari-Breakout
 Test
-
-IOAIOWRHAWORHAWORwar
