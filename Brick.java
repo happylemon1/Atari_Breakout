@@ -6,7 +6,7 @@ public class Brick {
     private int width;
     private int height;
     private Color color;
-    private int health; // Number of hits required to destroy the brick
+    private int health;
     
 
     public Brick(int x, int y, int width, int height, Color color, int health) {
