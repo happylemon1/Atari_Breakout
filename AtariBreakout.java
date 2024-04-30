@@ -5,5 +5,3 @@ public class AtariBreakout {
     }
 }
 
-//Jason is a bot
-//once  can run let me cook
