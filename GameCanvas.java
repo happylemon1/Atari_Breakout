@@ -5,6 +5,8 @@ import java.awt.*;
 public class GameCanvas extends JPanel {
     private static final int SCREEN_HEIGHT = 700;
     private static final int SCREEN_WIDTH = 700;
+    private Ball ball;
+    private Paddle paddle;
     private Timer timer;
     private boolean isRunning = false;
     private int delay;
@@ -46,6 +48,10 @@ public class GameCanvas extends JPanel {
     }
 
     public void drawPaddle() {
+        g.setColor(Color.WHITE);
+        g.drawRect(paddle.getX(), paddle.getY(), 70, 10);
+        g.setColor(Color.DARK_GRAY);
+        g.fillRect(paddle.getX(), paddle.getY(), 70, 10);
         
     }
 
