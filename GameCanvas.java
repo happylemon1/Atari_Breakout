@@ -1,8 +1,10 @@
 // import
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class GameCanvas extends JPanel {
+public class GameCanvas extends JPanel implements ActionListener {
     private static final int SCREEN_HEIGHT = 700;
     private static final int SCREEN_WIDTH = 700;
     private Ball ball;
@@ -47,7 +49,7 @@ public class GameCanvas extends JPanel {
         }
     }
 
-    public void drawPaddle() {
+    public void drawPaddle(Graphics g) {
         g.setColor(Color.WHITE);
         g.drawRect(paddle.getX(), paddle.getY(), 70, 10);
         g.setColor(Color.DARK_GRAY);
@@ -55,11 +57,17 @@ public class GameCanvas extends JPanel {
         
     }
 
-    public void drawBall() {
+    public void drawBall(Graphics g) {
 
     }
 
-    public void drawBricks() {
+    public void drawBricks(Graphics g) {
 
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
 }
