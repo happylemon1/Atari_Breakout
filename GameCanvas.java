@@ -16,8 +16,9 @@ public class GameCanvas extends JPanel implements ActionListener {
     private int lives = 3;
     private int level = 1;
 
-    public GameCanvas() {
-
+    public GameCanvas(Paddle paddle) {
+        this.paddle = paddle;
+        
         // setting up frame and panel
         this.setBackground(Color.BLACK);
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -45,7 +46,7 @@ public class GameCanvas extends JPanel implements ActionListener {
         super.paintComponent(g);
 
         if (isRunning) {
-            
+            drawPaddle(g);
         }
     }
 
