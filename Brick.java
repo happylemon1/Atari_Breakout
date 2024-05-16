@@ -7,15 +7,17 @@ public class Brick {
     private int height;
     private Color color;
     private int health;
+    private boolean isDestroyed; 
     
 
-    public Brick(int x, int y, int width, int height, Color color, int health) {
+    public Brick(int x, int y, int width, int height, Color color, int health, boolean isDestroyed) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.color = color;
         this.health = health;
+        this.isDestroyed = false;
     }
 
     // Getters and setters for position, width, height, color, health
@@ -47,6 +49,10 @@ public class Brick {
         return height;
     }
 
+    public boolean isDestroyed() {
+        return isDestroyed;
+    }
+
     public void setHeight(int height) {
         this.height = height;
     }
@@ -65,5 +71,9 @@ public class Brick {
 
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    public void setDestroyed(boolean isDestroyed) {
+        this.isDestroyed = isDestroyed;
     }
 }
