@@ -16,8 +16,9 @@ public class GameCanvas extends JPanel implements ActionListener {
     private int lives = 3;
     private int level = 1;
 
-    public GameCanvas(Paddle paddle) {
+    public GameCanvas(Paddle paddle, Ball ball) {
         this.paddle = paddle;
+        this.ball = ball;
 
         // setting up frame and panel
         this.setBackground(Color.BLACK);
@@ -46,18 +47,26 @@ public class GameCanvas extends JPanel implements ActionListener {
         super.paintComponent(g);
 
             drawPaddle(g);
+            drawBall(g);
     }
 
     public void drawPaddle(Graphics g) {
+        // drawing paddle
         g.setColor(Color.DARK_GRAY);
         g.fillRect(paddle.getX(), paddle.getY(), 100, 10);
         g.setColor(Color.WHITE);
         g.drawRect(paddle.getX(), paddle.getY(), 100, 10);
+
+        // drawing lines in paddle
+        for (int i = 1; i < 5; i++) {
+            g.drawLine(paddle.getX() + i * 20, paddle.getY(), paddle.getX() + i * 20, paddle.getY() + 10);
+        }
         
     }
 
     public void drawBall(Graphics g) {
-
+        g.setColor(Color.WHITE);
+        g.fillOval(ball.getX(), ball.getY(), ball.getRadius() * 2, ball.getRadius() * 2);
     }
 
     public void drawBricks(Graphics g) {
