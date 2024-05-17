@@ -3,10 +3,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List; 
+import java.util.ArrayList; 
 
 public class GameCanvas extends JPanel implements ActionListener {
     private static final int SCREEN_HEIGHT = 700;
     private static final int SCREEN_WIDTH = 700;
+    private List<Brick> bricks; 
+    private int numRows; 
+    private int numCols; 
+    private int width; 
+    private int height; 
+    private int xPos; 
+    private int yPos; 
+    private int brickSpacing;
     private Ball ball;
     private Paddle paddle;
     private Timer timer;
@@ -19,6 +29,7 @@ public class GameCanvas extends JPanel implements ActionListener {
     public GameCanvas(Paddle paddle, Ball ball) {
         this.paddle = paddle;
         this.ball = ball;
+        initializeBricks(); 
 
         // setting up frame and panel
         this.setBackground(Color.BLACK);
@@ -45,9 +56,11 @@ public class GameCanvas extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-            drawPaddle(g);
-            drawBall(g);
+        for (Brick brick : bricks) {
+            drawBricks(g); 
+        }
+        drawPaddle(g);
+        drawBall(g);
     }
 
     public void drawPaddle(Graphics g) {
@@ -71,12 +84,23 @@ public class GameCanvas extends JPanel implements ActionListener {
     }
 
     public void drawBricks(Graphics g) {
-
+        g.fillRect(x, y, width, height); // placeholder can fix later
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
+    }
+
+    public void initializeBricks() {
+        bricks = new ArrayList<>(); 
+        for (int row = 0; row < numRows; row++) {
+            for (int col = 0; col < numCols; col++) {
+                int x = xPos + col * (width + brickSpacing); 
+                int y = yPos + row * (height + brickSpacing); 
+                bricks.add(new Brick(x, y, width, height, Color.yellow, false));
+            }
+        }
     }
 }

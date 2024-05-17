@@ -6,17 +6,15 @@ public class Brick {
     private int width;
     private int height;
     private Color color;
-    private int health;
     private boolean isDestroyed; 
     
 
-    public Brick(int x, int y, int width, int height, Color color, int health, boolean isDestroyed) {
+    public Brick(int x, int y, int width, int height, Color color, boolean isDestroyed) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.color = color;
-        this.health = health;
         this.isDestroyed = false;
     }
 
@@ -65,15 +63,13 @@ public class Brick {
         this.color = color;
     }
 
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
     public void setDestroyed(boolean isDestroyed) {
         this.isDestroyed = isDestroyed;
+    }
+
+    public void render(Graphics g) {
+        if (!isDestroyed) {
+            g.fillRect(x, y, width, height); 
+        }
     }
 }
