@@ -109,7 +109,7 @@ public class GameCanvas extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (isRunning) {
             moveBall();
-
+            paddle.BallCollision(ball);
             repaint();
         }
 
