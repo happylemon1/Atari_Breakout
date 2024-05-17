@@ -67,6 +67,7 @@ public class GameCanvas extends JPanel implements ActionListener {
     public void drawBall(Graphics g) {
         g.setColor(Color.WHITE);
         g.fillOval(ball.getX(), ball.getY(), ball.getRadius() * 2, ball.getRadius() * 2);
+        
     }
 
     public void drawBricks(Graphics g) {
