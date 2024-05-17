@@ -1,9 +1,7 @@
 // import
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
+import java.awt.event.*;
 
 public class GameCanvas extends JPanel implements ActionListener {
     private static final int SCREEN_HEIGHT = 700;
@@ -70,7 +68,7 @@ public class GameCanvas extends JPanel implements ActionListener {
     public void drawBall(Graphics g) {
         g.setColor(Color.WHITE);
         g.fillOval(ball.getX(), ball.getY(), ball.getRadius() * 2, ball.getRadius() * 2);
-        
+
     }
     
     public void moveBall() {
@@ -111,6 +109,23 @@ public class GameCanvas extends JPanel implements ActionListener {
             moveBall();
             paddle.BallCollision(ball);
             repaint();
+        }
+
+    }
+
+    public class MyKeyAdapter extends KeyAdapter {
+        @Override
+        public void keyPressed(KeyEvent e) {
+            // using switch statement to move paddle depending on key pressed
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_LEFT:
+                    
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    
+                    break;
+            }
+
         }
 
     }
