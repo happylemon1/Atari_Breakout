@@ -4,6 +4,7 @@ public class Paddle {
     private int width; 
     private int height; 
     private int paddleSpeed; 
+    private int screenWidth = 700; 
 
     // constructor
     public Paddle(int x, int y, int width, int height, int paddleSpeed) {
@@ -11,8 +12,7 @@ public class Paddle {
         this.y = y;
         this.width = width; 
         this.height = height; 
-        this.paddleSpeed = 0; 
-
+        this.paddleSpeed = paddleSpeed;
     }
 
     // returns x coordinate
@@ -48,9 +48,32 @@ public class Paddle {
     }
 
     public void move() {
-        y += paddleSpeed; 
-        if (y < 0) {
-            y = 0; 
+        x += paddleSpeed; 
+
+        if (x < 0) {
+            x = 0; 
+        }
+        else if (x + width > screenWidth) {
+            x = screenWidth - width; 
         }
     }
+
+    public void BallCollision(Ball ball) {
+        int ballY = ball.getY() - ball.getRadius(); 
+        int ballX = ball.getX(); 
+
+        if (ballY <= y && ballX <= x) {
+            double paddleCenterX = x + width / 2.0; 
+            double paddleCenterY = y + height / 2.0; 
+            double collisionAngle = Math.atan2(y - paddleCenterY, x - paddleCenterX); 
+            double bounceBackAngle = Math.PI - collisionAngle;
+                
+            double velocity = Math.sqrt(ball.getdX() * ball.getdX() + ball.getdY() * ball.getdY()); 
+        
+            ball.setdX((int) (velocity * Math.cos(bounceBackAngle)));
+            ball.setdY((int) (velocity * Math.sin(bounceBackAngle)));
+        }
+            
+    }
+    
 }
