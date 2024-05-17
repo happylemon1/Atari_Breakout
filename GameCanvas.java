@@ -3,19 +3,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List; 
-import java.util.ArrayList; 
+import java.util.List;
 
 public class GameCanvas extends JPanel implements ActionListener {
     private static final int SCREEN_HEIGHT = 700;
     private static final int SCREEN_WIDTH = 700;
-    private List<Brick> bricks; 
-    private int numRows; 
-    private int numCols; 
-    private int width; 
-    private int height; 
-    private int xPos; 
-    private int yPos; 
+    private BrickLayout brickLayout;
     private int brickSpacing;
     private Ball ball;
     private Paddle paddle;
@@ -26,10 +19,10 @@ public class GameCanvas extends JPanel implements ActionListener {
     private int lives = 3;
     private int level = 1;
 
-    public GameCanvas(Paddle paddle, Ball ball) {
+    public GameCanvas(Paddle paddle, Ball ball, BrickLayout brickLayout) {
         this.paddle = paddle;
         this.ball = ball;
-        initializeBricks(); 
+        this.brickLayout = brickLayout;
 
         // setting up frame and panel
         this.setBackground(Color.BLACK);
@@ -56,11 +49,9 @@ public class GameCanvas extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (Brick brick : bricks) {
-            drawBricks(g); 
-        }
         drawPaddle(g);
         drawBall(g);
+        drawBricks(g);
     }
 
     public void drawPaddle(Graphics g) {
@@ -84,7 +75,20 @@ public class GameCanvas extends JPanel implements ActionListener {
     }
 
     public void drawBricks(Graphics g) {
-        g.fillRect(x, y, width, height); // placeholder can fix later
+        // 2D array layout
+        Brick[][] bricks = brickLayout.getLayout();
+        // drawing the bricks
+        for (int row = 0; row < bricks.length; row++) {
+            for (int col = 0; col < bricks[row].length; col++) {
+                if (bricks[row][col] != null) {
+                    Brick brick = bricks[row][col];
+                    g.setColor(brick.getColor());
+                    g.fillRect(brick.getX(), brick.getY(), brick.getWidth(), brick.getHeight());
+                    g.setColor(Color.BLACK);
+                    g.drawRect(brick.getX(), brick.getY(), brick.getWidth(), brick.getHeight());
+                }
+            }
+        }
     }
 
     @Override
@@ -93,14 +97,4 @@ public class GameCanvas extends JPanel implements ActionListener {
         throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
 
-    public void initializeBricks() {
-        bricks = new ArrayList<>(); 
-        for (int row = 0; row < numRows; row++) {
-            for (int col = 0; col < numCols; col++) {
-                int x = xPos + col * (width + brickSpacing); 
-                int y = yPos + row * (height + brickSpacing); 
-                bricks.add(new Brick(x, y, width, height, Color.yellow, false));
-            }
-        }
-    }
 }

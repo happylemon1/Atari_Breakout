@@ -9,7 +9,7 @@ public class Brick {
     private boolean isDestroyed; 
     
 
-    public Brick(int x, int y, int width, int height, Color color, boolean isDestroyed) {
+    public Brick(int x, int y, int width, int height, Color color) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -67,9 +67,4 @@ public class Brick {
         this.isDestroyed = isDestroyed;
     }
 
-    public void render(Graphics g) {
-        if (!isDestroyed) {
-            g.fillRect(x, y, width, height); 
-        }
-    }
 }
