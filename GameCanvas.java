@@ -9,7 +9,6 @@ public class GameCanvas extends JPanel implements ActionListener {
     private static final int SCREEN_HEIGHT = 700;
     private static final int SCREEN_WIDTH = 700;
     private BrickLayout brickLayout;
-    private int brickSpacing;
     private Ball ball;
     private Paddle paddle;
     private Timer timer;
@@ -108,9 +107,10 @@ public class GameCanvas extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        moveBall(); 
-        repaint(); 
+        if (isRunning) {
+            moveBall();
+            repaint();
+        }
 
     }
 
