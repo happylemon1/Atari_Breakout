@@ -108,8 +108,8 @@ public class GameCanvas extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (isRunning) {
-            moveBall();
-            paddle.BallCollision(ball);
+            moveBall(); 
+            paddle.BallCollision(ball); 
             repaint();
         }
 

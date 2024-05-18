@@ -62,7 +62,7 @@ public class Paddle {
         int ballY = ball.getY() - ball.getRadius(); 
         int ballX = ball.getX(); 
 
-        if (ballY <= y && ballX <= x) {
+        if (ballY == getY() && ballX == getX()) {
             double paddleCenterX = x + width / 2.0; 
             double paddleCenterY = y + height / 2.0; 
             double collisionAngle = Math.atan2(y - paddleCenterY, x - paddleCenterX); 
