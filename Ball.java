@@ -65,9 +65,28 @@ public class Ball {
         
     }
 
+    public void PaddleCollision(Paddle p) {
+        int ballBottom = y + radius;
+        int paddleTop = p.getY() - p.getHeight(); 
+        int paddleLeft = p.getX() - (p.getWidth()/2);
+        int paddleRight = p.getX() + (p.getWidth()/2);
+
+        if(ballBottom == paddleTop) 
+        {
+            dY = -dY; 
+        }
+
+        if(x >= paddleLeft && x <= paddleRight) {
+            dX = -dX;
+        }
+    }
+
     public void move() {
         x += dX; 
         y += dY;
     }
     
+    public void BrickCollision() {
+
+    }
 }

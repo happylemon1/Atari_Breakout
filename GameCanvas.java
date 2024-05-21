@@ -70,20 +70,35 @@ public class GameCanvas extends JPanel implements ActionListener {
         g.fillOval(ball.getX(), ball.getY(), ball.getRadius() * 2, ball.getRadius() * 2);
 
     }
-    
+    public void handleCollisions(int x, int y) {
+        ball.setX(x); 
+        ball.setY(y); 
+        ball.WallCollision(SCREEN_WIDTH, SCREEN_HEIGHT);
+        ball.PaddleCollision(paddle); 
+        //ball.BrickCollision(); 
+        ball.setX(ball.getX()); 
+        ball.setY(ball.getY()); 
+    }
     public void moveBall() {
         int newX = ball.getX() + ball.getdX(); 
         int newY = ball.getY() + ball.getdY(); 
 
-        if (newX <= 0 || newX + ball.getRadius() * 2 >= SCREEN_WIDTH) {
+        handleCollisions(newX, newY);
+
+
+
+
+        
+        /*
+         if (newX <= 0 || newX + ball.getRadius() * 2 >= SCREEN_WIDTH) {
             ball.setdX(-ball.getdX()); 
         }
 
         if (newY <= 0 || newY + ball.getRadius() * 2 >= SCREEN_HEIGHT) {
             ball.setdY(-ball.getdY()); 
         }
-        ball.setX(newX); 
-        ball.setY(newY); 
+         */
+
     }
 
     public void drawBricks(Graphics g) {
@@ -102,12 +117,11 @@ public class GameCanvas extends JPanel implements ActionListener {
             }
         }
     }
-
+        
     @Override
     public void actionPerformed(ActionEvent e) {
         if (isRunning) {
             moveBall(); 
-            paddle.BallCollision(ball); 
             repaint();
         }
 
