@@ -71,23 +71,20 @@ public class GameCanvas extends JPanel implements ActionListener {
 
     }
     public void handleCollisions(int x, int y) {
-        ball.setX(x); 
-        ball.setY(y); 
         ball.WallCollision(SCREEN_WIDTH, SCREEN_HEIGHT);
         ball.PaddleCollision(paddle); 
         //ball.BrickCollision(); 
-        ball.setX(ball.getX()); 
-        ball.setY(ball.getY()); 
     }
     public void moveBall() {
         int newX = ball.getX() + ball.getdX(); 
         int newY = ball.getY() + ball.getdY(); 
 
-        handleCollisions(newX, newY);
-
-
-
-
+        ball.setX(newX); 
+        ball.setY(newY); 
+        
+        handleCollisions(newX, newY); 
+        //ball.WallCollision(SCREEN_WIDTH, SCREEN_HEIGHT); 
+        //ball.PaddleCollision(paddle); 
         
         /*
          if (newX <= 0 || newX + ball.getRadius() * 2 >= SCREEN_WIDTH) {

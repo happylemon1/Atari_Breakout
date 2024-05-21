@@ -41,15 +41,15 @@ public class BrickLayout{
 
     private Color getRowColor(int row) {
         switch (row) {
-            case 0: return Color.PINK;
-            case 1: return Color.RED;
-            case 2: return Color.ORANGE;
-            case 3: return Color.YELLOW;
-            case 4: return Color.GREEN;
-            case 5: return Color.BLUE;
-            case 6: return Color.MAGENTA;
-            case 7: return Color.CYAN;
-            default: return Color.GRAY;
+        case 0: return new Color(255, 105, 180);
+        case 1: return new Color(255, 69, 0);   
+        case 2: return new Color(255, 165, 0);  
+        case 3: return new Color(255, 255, 0);   
+        case 4: return new Color(50, 205, 50);   
+        case 5: return new Color(30, 144, 255); 
+        case 6: return new Color(138, 43, 226);  
+        case 7: return new Color(0, 255, 255); 
+        default: return new Color(169, 169, 169);
         }
     }
 

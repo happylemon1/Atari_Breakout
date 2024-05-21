@@ -67,18 +67,45 @@ public class Ball {
 
     public void PaddleCollision(Paddle p) {
         int ballBottom = y + radius;
-        int paddleTop = p.getY() - p.getHeight(); 
-        int paddleLeft = p.getX() - (p.getWidth()/2);
-        int paddleRight = p.getX() + (p.getWidth()/2);
+        int paddleTop = p.getY(); 
+        int paddleLeft = p.getX() ;
+        int paddleRight = p.getX() + p.getWidth();
 
-        if(ballBottom == paddleTop) 
-        {
+        /* 
+        if ((ballBottom == paddleTop) && ((x >= paddleLeft) && (x <= paddleRight))) {
+            dX = -dX; 
             dY = -dY; 
-        }
+            System.out.println("paddleLeft: " + paddleLeft); 
+            System.out.println("paddleRight: " + paddleRight); 
+            System.out.println("BallBottom" + ballBottom); 
+            System.out.println("PaddleTop: " + paddleTop); 
+            System.out.println("Collision point: " + x + ", Collision point: " + y); 
 
-        if(x >= paddleLeft && x <= paddleRight) {
-            dX = -dX;
         }
+        */
+         
+
+        /*
+        if (ballBottom == paddleTop) {
+            System.out.println("BallBottom " + ballBottom); 
+            System.out.println("PaddleTop: " + paddleTop); 
+            System.out.println("Collision point: " + x + ", Collision point: " + y); 
+            dY = -dY; 
+            
+        }
+        
+        if (x >= paddleLeft && x <= paddleRight) {
+            System.out.println("paddleLeft: " + paddleLeft); 
+            System.out.println("paddleLeft: " + paddleRight); 
+            dX = -dX; 
+            System.out.println("newdX: " + dX);
+        }  
+         */
+
+        
+
+         
+
     }
 
     public void move() {
