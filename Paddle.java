@@ -33,6 +33,10 @@ public class Paddle {
         return height; 
     }
 
+    public int getPaddleSpeed() {
+        return paddleSpeed;
+    }
+
     // sets x coordinate
     public void setX(int x) {
         this.x = x;
@@ -46,17 +50,27 @@ public class Paddle {
     public void setPaddleSpeed(int paddleSpeed) {
         this.paddleSpeed = paddleSpeed; 
     }
-
-    public void move() {
+    
+    // moveRight() moves the paddle to the right according to the paddle speed
+    public void moveRight() {
         x += paddleSpeed; 
 
-        if (x < 0) {
-            x = 0; 
-        }
-        else if (x + width > screenWidth) {
+        // checks if paddle moves beyong right boundary, preventing it from moving past it
+        if (x + width > screenWidth) {
             x = screenWidth - width; 
         }
     }
+
+    // moveLeft() moves the paddle to the left according to the paddle speed
+    public void moveLeft() {
+        x -= paddleSpeed; 
+
+        // checks if paddle moves beyond left boundary, preventing it from moving past it
+        if (x < 0) {
+            x = 0; 
+        }
+    }
+
 
     public void BallCollision(Ball ball) {
         int ballY = ball.getY() - ball.getRadius(); 

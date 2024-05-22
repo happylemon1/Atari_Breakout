@@ -11,7 +11,7 @@ public class GameCanvas extends JPanel implements ActionListener {
     private Paddle paddle;
     private Timer timer;
     private boolean isRunning = false;
-    private int delay;
+    private int delay = 10;
     private int score = 0;
     private int lives = 3;
     private int level = 1;
@@ -25,6 +25,7 @@ public class GameCanvas extends JPanel implements ActionListener {
         this.setBackground(Color.BLACK);
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setFocusable(true);
+        this.addKeyListener(new MyKeyAdapter());
         JFrame gameFrame = new JFrame("Atari Breakout");
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameFrame.add(this);
@@ -119,9 +120,9 @@ public class GameCanvas extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (isRunning) {
             moveBall(); 
-            repaint();
         }
 
+        repaint();
     }
 
     public class MyKeyAdapter extends KeyAdapter {
@@ -130,10 +131,10 @@ public class GameCanvas extends JPanel implements ActionListener {
             // using switch statement to move paddle depending on key pressed
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_LEFT:
-                    
+                    paddle.moveLeft();
                     break;
                 case KeyEvent.VK_RIGHT:
-                    
+                    paddle.moveRight();
                     break;
             }
 
