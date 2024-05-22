@@ -83,24 +83,35 @@ public class Ball {
 
         }
         */
+        
          
 
-        /*
+
         if (ballBottom == paddleTop) {
             System.out.println("BallBottom " + ballBottom); 
             System.out.println("PaddleTop: " + paddleTop); 
-            System.out.println("Collision point: " + x + ", Collision point: " + y); 
-            dY = -dY; 
+            System.out.println("Collision point: " + x + "," + y); 
+            System.out.println("paddleLeft: " + paddleLeft);
+            System.out.println("paddleRight: " + paddleRight); 
+            if (x >= paddleLeft && x <= paddleRight) {
+                System.out.println("paddleLeft: " + paddleLeft); 
+                System.out.println("paddleLeft: " + paddleRight); 
+                dX = -dX; 
+                dY = -dY; 
+                System.out.println("newdX: " + dX);
+            }
             
         }
         
+        /* 
         if (x >= paddleLeft && x <= paddleRight) {
             System.out.println("paddleLeft: " + paddleLeft); 
             System.out.println("paddleLeft: " + paddleRight); 
             dX = -dX; 
             System.out.println("newdX: " + dX);
         }  
-         */
+        */
+         
 
         
 
