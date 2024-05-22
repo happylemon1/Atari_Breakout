@@ -54,9 +54,9 @@ public class GameCanvas extends JPanel implements ActionListener {
     public void drawPaddle(Graphics g) {
         // drawing paddle
         g.setColor(Color.DARK_GRAY);
-        g.fillRect(paddle.getX(), paddle.getY(), 100, 10);
+        g.fillRect(paddle.getX(), paddle.getY(), paddle.getWidth(), paddle.getHeight());
         g.setColor(Color.WHITE);
-        g.drawRect(paddle.getX(), paddle.getY(), 100, 10);
+        g.drawRect(paddle.getX(), paddle.getY(), paddle.getWidth(), paddle.getHeight());
 
         // drawing lines in paddle
         for (int i = 1; i < 5; i++) {
