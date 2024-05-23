@@ -74,7 +74,7 @@ public class GameCanvas extends JPanel implements ActionListener {
     public void handleCollisions(int x, int y) {
         ball.WallCollision(SCREEN_WIDTH, SCREEN_HEIGHT);
         ball.PaddleCollision(paddle); 
-        //ball.BrickCollision(); 
+        ball.BrickCollision(brickLayout); 
     }
     public void moveBall() {
         int newX = ball.getX() + ball.getdX(); 
@@ -105,7 +105,7 @@ public class GameCanvas extends JPanel implements ActionListener {
         // drawing the bricks
         for (int row = 0; row < bricks.length; row++) {
             for (int col = 0; col < bricks[row].length; col++) {
-                if (bricks[row][col] != null) {
+                if (bricks[row][col].isDestroyed() != true) {
                     Brick brick = bricks[row][col];
                     g.setColor(brick.getColor());
                     g.fillRect(brick.getX(), brick.getY(), brick.getWidth(), brick.getHeight());

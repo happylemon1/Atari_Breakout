@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class Ball {
     private int x;
     private int y;
@@ -52,6 +54,11 @@ public class Ball {
 
     public void setdY(int dY) {
         this.dY = dY;
+    }
+
+    // getBounds() returns the bounding box of the ball
+    public Rectangle getBounds() {
+        return new Rectangle(x - radius, y - radius, radius * 2, radius * 2);
     }
 
     public void WallCollision(int width, int height) {
@@ -124,7 +131,29 @@ public class Ball {
         y += dY;
     }
     
-    public void BrickCollision() {
+    // BrickCollision() uses for loops to check if coordinates of ball are same as coordinates of any brick, then setting its status to destroyed and creating collision
+    public void BrickCollision(BrickLayout brickLayout) {
+        Brick[][] bricks = brickLayout.getLayout();
+        for (int row = 0; row < brickLayout.getRows(); row++) {
+            for (int col = 0; col < brickLayout.getCols(); col++) {
+                Brick brick = bricks[row][col];
+                if ((brick != null) && (!brick.isDestroyed())) {
+                    // checks if bounds of brick overlaps with bounds of ball to check for collision
+                    if (getBounds().intersects(brick.getBounds())) {
+                        brick.setDestroyed(true);
 
+                        // adjusts ball's direction based on collision horizontally
+                        if (x + radius - dX <= brick.getX() || x - radius - dX >= brick.getX() + brick.getWidth()) {
+                            dX = -dX;
+                        }
+
+                        // adjusts ball's direction based on collision vertically
+                        if (y + radius - dY <= brick.getY() || y - radius - dY >= brick.getY() + brick.getHeight()) {
+                            dY = -dY;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

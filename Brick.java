@@ -67,4 +67,9 @@ public class Brick {
         this.isDestroyed = isDestroyed;
     }
 
+    // returns the rectangular bounds of the brick
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, width, height);
+    }
+
 }
