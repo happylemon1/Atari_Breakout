@@ -77,6 +77,16 @@ public class GameCanvas extends JPanel implements ActionListener {
         ball.BrickCollision(brickLayout); 
     }
     public void moveBall() {
+        if (ball.getNumCollisions() == 4 || ball.getNumCollisions() == 12) {
+            ball.increaseSpeed(); 
+        }
+
+        if (ball.getY() + ball.getRadius() >= SCREEN_HEIGHT) {
+            lives --; 
+            ball.setX(350); 
+            ball.setY(350); 
+            System.out.println(lives);
+        }
         int newX = ball.getX() + ball.getdX(); 
         int newY = ball.getY() + ball.getdY(); 
 

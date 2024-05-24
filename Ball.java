@@ -6,6 +6,7 @@ public class Ball {
     private int radius; 
     private int dX; 
     private int dY; 
+    private int numCollisions = 0;
 
     // constructor
     public Ball(int x, int y, int radius, int dX, int dY) {
@@ -38,6 +39,10 @@ public class Ball {
         return dY;
     }
 
+    public int getNumCollisions() {
+        return numCollisions; 
+    }
+
     // sets x coordinate
     public void setX(int x) {
         this.x = x;
@@ -56,6 +61,10 @@ public class Ball {
         this.dY = dY;
     }
 
+    public void setNumCollisions(int numCollisions) {
+        this.numCollisions = numCollisions; 
+    }
+
     // getBounds() returns the bounding box of the ball
     public Rectangle getBounds() {
         return new Rectangle(x - radius, y - radius, radius * 2, radius * 2);
@@ -66,7 +75,7 @@ public class Ball {
             dX = -dX; 
         }
 
-        if (y - radius <= 0 || y + radius >= height) {
+        if (y - radius <= 0) {
             dY = -dY; 
         }
         
@@ -77,35 +86,10 @@ public class Ball {
         int paddleTop = p.getY(); 
         int paddleLeft = p.getX() ;
         int paddleRight = p.getX() + p.getWidth();
-
-        /* 
-        if ((ballBottom == paddleTop) && ((x >= paddleLeft) && (x <= paddleRight))) {
-            dX = -dX; 
-            dY = -dY; 
-            System.out.println("paddleLeft: " + paddleLeft); 
-            System.out.println("paddleRight: " + paddleRight); 
-            System.out.println("BallBottom" + ballBottom); 
-            System.out.println("PaddleTop: " + paddleTop); 
-            System.out.println("Collision point: " + x + ", Collision point: " + y); 
-
-        }
-        */
-        
          
-
-
         if (ballBottom == paddleTop) {
-            System.out.println("BallBottom " + ballBottom); 
-            System.out.println("PaddleTop: " + paddleTop); 
-            System.out.println("Collision point: " + x + "," + y); 
-            System.out.println("paddleLeft: " + paddleLeft);
-            System.out.println("paddleRight: " + paddleRight); 
             if (x >= paddleLeft && x <= paddleRight) {
-                System.out.println("paddleLeft: " + paddleLeft); 
-                System.out.println("paddleLeft: " + paddleRight); 
-                dX = -dX; 
                 dY = -dY; 
-                System.out.println("newdX: " + dX);
             }
             
         }
@@ -130,6 +114,16 @@ public class Ball {
         x += dX; 
         y += dY;
     }
+
+    public void increaseSpeed() {
+        double speedMultiplier = 1.2;
+        double velocity = Math.sqrt(dX * dX + dY * dY);
+        double newVelocity = velocity * speedMultiplier;
+        double angle = Math.atan2(dY, dX);
+
+        dX = (int) (newVelocity * Math.cos(angle));
+        dY = (int) (newVelocity * Math.sin(angle));
+    }
     
     // BrickCollision() uses for loops to check if coordinates of ball are same as coordinates of any brick, then setting its status to destroyed and creating collision
     public void BrickCollision(BrickLayout brickLayout) {
@@ -141,6 +135,7 @@ public class Ball {
                     // checks if bounds of brick overlaps with bounds of ball to check for collision
                     if (getBounds().intersects(brick.getBounds())) {
                         brick.setDestroyed(true);
+                        numCollisions++;
 
                         // adjusts ball's direction based on collision horizontally
                         if (x + radius - dX <= brick.getX() || x - radius - dX >= brick.getX() + brick.getWidth()) {
