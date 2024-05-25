@@ -83,9 +83,7 @@ public class GameCanvas extends JPanel implements ActionListener {
 
         if (ball.getY() + ball.getRadius() >= SCREEN_HEIGHT) {
             lives --; 
-            ball.setX(350); 
-            ball.setY(350); 
-            System.out.println(lives);
+            ball.respawn();
         }
         int newX = ball.getX() + ball.getdX(); 
         int newY = ball.getY() + ball.getdY(); 
