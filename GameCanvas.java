@@ -45,7 +45,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         } 
         catch (IOException | FontFormatException e) {
             e.printStackTrace();
-            // Fallback to default font if custom font fails to load
+            // fallback to default font if custom font fails to load
             arcadeFont = new Font("SansSerif", Font.BOLD, 30);
         }
 
