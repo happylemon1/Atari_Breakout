@@ -82,24 +82,23 @@ public class Ball {
     public void respawn() {
         setX(350);
         setY(350);
-        // Set dX to a random small horizontal velocity, either positive or negative
         setdX(rand.nextInt(3) + 1 * (rand.nextBoolean() ? 1 : -1));
-        setdY(INITIAL_SPEED); // Vertical velocity
+        setdY(INITIAL_SPEED);
         this.velocity = Math.sqrt(dX * dX + dY * dY);
         this.angle = Math.atan2(dY, dX);
+        // Reset numCollisions to 0
+        numCollisions = 0;
     }
 
     public void WallCollision(int width, int height) {
         if (x - radius <= 0 || x + radius >= width) {
             dX = -dX; 
             angle = Math.atan2(dY, dX);
-            numCollisions++;
         }
 
         if (y - radius <= 0) {
             dY = -dY; 
             angle = Math.atan2(dY, dX);
-            numCollisions++;
         }
     }
 
@@ -112,9 +111,8 @@ public class Ball {
         if (ballBottom >= paddleTop && ballBottom <= paddleTop + getdY() && x + radius >= paddleLeft && x - radius <= paddleRight) {
             double collisionPoint = (x - (p.getX() + p.getWidth() / 2.0)) / (p.getWidth() / 2.0);
             angle = collisionPoint * (Math.PI / 4);
-            dY = -Math.abs(dY); // Ensure the ball bounces upwards
-            y = paddleTop - radius; // Adjust position to prevent sticking
-            numCollisions++;
+            dY = -Math.abs(dY);
+            y = paddleTop - radius;
         }
     }
 
@@ -140,18 +138,13 @@ public class Ball {
             for (int col = 0; col < brickLayout.getCols(); col++) {
                 Brick brick = bricks[row][col];
                 if ((brick != null) && (!brick.isDestroyed())) {
-                    // checks if bounds of brick overlaps with bounds of ball to check for collision
                     if (getBounds().intersects(brick.getBounds())) {
                         brick.setDestroyed(true);
                         numCollisions++;
-
-                        // adjusts ball's direction based on collision horizontally
                         if (x + radius - dX <= brick.getX() || x - radius - dX >= brick.getX() + brick.getWidth()) {
                             dX = -dX;
                             angle = Math.atan2(dY, dX);
                         }
-
-                        // adjusts ball's direction based on collision vertically
                         if (y + radius - dY <= brick.getY() || y - radius - dY >= brick.getY() + brick.getHeight()) {
                             dY = -dY;
                             angle = Math.atan2(dY, dX);
