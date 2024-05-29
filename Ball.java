@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.Random;
 
 public class Ball {
     private int x;
@@ -6,7 +7,12 @@ public class Ball {
     private int radius; 
     private int dX; 
     private int dY; 
+    private double velocity; 
+    private double angle; 
     private int numCollisions = 0;
+    private Random rand = new Random(); // Initialize a Random object
+    private final int INITIAL_SPEED = 4; // Initial speed for dY
+    private final int MAX_SPEED = 10; // Maximum speed cap
 
     // constructor
     public Ball(int x, int y, int radius, int dX, int dY) {
@@ -15,6 +21,8 @@ public class Ball {
         this.radius = radius; 
         this.dX = dX; 
         this.dY = dY; 
+        this.velocity = Math.sqrt(dX * dX + dY * dY);
+        this.angle = Math.atan2(dY, dX);
     }
 
     // returns x coordinate
@@ -74,48 +82,40 @@ public class Ball {
     public void respawn() {
         setX(350);
         setY(350);
-        setdX(0);
-        setdY(4);
+        // Set dX to a random small horizontal velocity, either positive or negative
+        setdX(rand.nextInt(3) + 1 * (rand.nextBoolean() ? 1 : -1));
+        setdY(INITIAL_SPEED); // Vertical velocity
+        this.velocity = Math.sqrt(dX * dX + dY * dY);
+        this.angle = Math.atan2(dY, dX);
     }
 
     public void WallCollision(int width, int height) {
         if (x - radius <= 0 || x + radius >= width) {
             dX = -dX; 
+            angle = Math.atan2(dY, dX);
+            numCollisions++;
         }
 
         if (y - radius <= 0) {
             dY = -dY; 
+            angle = Math.atan2(dY, dX);
+            numCollisions++;
         }
-        
     }
 
     public void PaddleCollision(Paddle p) {
         int ballBottom = y + radius;
         int paddleTop = p.getY(); 
-        int paddleLeft = p.getX() ;
+        int paddleLeft = p.getX();
         int paddleRight = p.getX() + p.getWidth();
-         
-        if (ballBottom == paddleTop) {
-            if (x >= paddleLeft && x <= paddleRight) {
-                dY = -dY; 
-            }
-            
+
+        if (ballBottom >= paddleTop && ballBottom <= paddleTop + getdY() && x + radius >= paddleLeft && x - radius <= paddleRight) {
+            double collisionPoint = (x - (p.getX() + p.getWidth() / 2.0)) / (p.getWidth() / 2.0);
+            angle = collisionPoint * (Math.PI / 4);
+            dY = -Math.abs(dY); // Ensure the ball bounces upwards
+            y = paddleTop - radius; // Adjust position to prevent sticking
+            numCollisions++;
         }
-        
-        /* 
-        if (x >= paddleLeft && x <= paddleRight) {
-            System.out.println("paddleLeft: " + paddleLeft); 
-            System.out.println("paddleLeft: " + paddleRight); 
-            dX = -dX; 
-            System.out.println("newdX: " + dX);
-        }  
-        */
-         
-
-        
-
-         
-
     }
 
     public void move() {
@@ -124,15 +124,15 @@ public class Ball {
     }
 
     public void increaseSpeed() {
-        double speedMultiplier = 1.2;
-        double velocity = Math.sqrt(dX * dX + dY * dY);
-        double newVelocity = velocity * speedMultiplier;
-        double angle = Math.atan2(dY, dX);
-
-        dX = (int) (newVelocity * Math.cos(angle));
-        dY = (int) (newVelocity * Math.sin(angle));
+        double speedMultiplier = 1.1;
+        velocity *= speedMultiplier;
+        if (velocity > MAX_SPEED) {
+            velocity = MAX_SPEED;
+        }
+        dX = (int) (velocity * Math.cos(angle));
+        dY = (int) (velocity * Math.sin(angle));
     }
-    
+
     // BrickCollision() uses for loops to check if coordinates of ball are same as coordinates of any brick, then setting its status to destroyed and creating collision
     public void BrickCollision(BrickLayout brickLayout) {
         Brick[][] bricks = brickLayout.getLayout();
@@ -148,17 +148,17 @@ public class Ball {
                         // adjusts ball's direction based on collision horizontally
                         if (x + radius - dX <= brick.getX() || x - radius - dX >= brick.getX() + brick.getWidth()) {
                             dX = -dX;
+                            angle = Math.atan2(dY, dX);
                         }
 
                         // adjusts ball's direction based on collision vertically
                         if (y + radius - dY <= brick.getY() || y - radius - dY >= brick.getY() + brick.getHeight()) {
                             dY = -dY;
+                            angle = Math.atan2(dY, dX);
                         }
                     }
                 }
             }
         }
-
     }
-
 }
