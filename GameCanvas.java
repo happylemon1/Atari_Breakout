@@ -101,8 +101,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
 
         if (ball.getY() + ball.getRadius() >= SCREEN_HEIGHT) {
             lives --; 
-            ball.setX(350); 
-            ball.setY(350); 
+            ball.respawn();
             System.out.println(lives);
         }
         int newX = ball.getX() + ball.getdX(); 
