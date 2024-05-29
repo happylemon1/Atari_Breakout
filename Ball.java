@@ -70,6 +70,14 @@ public class Ball {
         return new Rectangle(x - radius, y - radius, radius * 2, radius * 2);
     }
 
+    // respawn() resets balls position and speed
+    public void respawn() {
+        setX(350);
+        setY(350);
+        setdX(0);
+        setdY(4);
+    }
+
     public void WallCollision(int width, int height) {
         if (x - radius <= 0 || x + radius >= width) {
             dX = -dX; 
@@ -150,7 +158,7 @@ public class Ball {
                 }
             }
         }
-        
+
     }
 
 }

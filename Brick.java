@@ -6,7 +6,8 @@ public class Brick {
     private int width;
     private int height;
     private Color color;
-    private boolean isDestroyed; 
+    private boolean isDestroyed;
+    private boolean scoreCounted; 
     
 
     public Brick(int x, int y, int width, int height, Color color) {
@@ -16,9 +17,10 @@ public class Brick {
         this.height = height;
         this.color = color;
         this.isDestroyed = false;
+        this.scoreCounted = false;
     }
 
-    // Getters and setters for position, width, height, color, health
+    // Getters and setters for instance variables
     public int getX() {
         return x;
     }
@@ -51,6 +53,10 @@ public class Brick {
         return isDestroyed;
     }
 
+    public boolean scoreCounted() {
+        return scoreCounted;
+    }
+
     public void setHeight(int height) {
         this.height = height;
     }
@@ -65,6 +71,10 @@ public class Brick {
 
     public void setDestroyed(boolean isDestroyed) {
         this.isDestroyed = isDestroyed;
+    }
+
+    public void setScoreCounted(boolean scoreCounted) {
+        this.scoreCounted = scoreCounted;
     }
 
     // returns the rectangular bounds of the brick
