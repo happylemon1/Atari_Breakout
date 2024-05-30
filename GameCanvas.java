@@ -209,7 +209,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         else if (paddle.getX() + paddle.getWidth() > SCREEN_WIDTH) {
             paddle.setX(SCREEN_WIDTH - paddle.getWidth());
         }
-    }        
+    } 
 
     @Override
     public void actionPerformed(ActionEvent e) {
