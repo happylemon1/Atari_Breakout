@@ -125,6 +125,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         // drawing the bricks
         for (int row = 0; row < bricks.length; row++) {
             for (int col = 0; col < bricks[row].length; col++) {
+                // set brick color and outline
                 if (!bricks[row][col].isDestroyed()) {
                     Brick brick = bricks[row][col];
                     g.setColor(brick.getColor());
