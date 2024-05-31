@@ -69,7 +69,8 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
             drawBall(g);
             drawBricks(g);
             displayScore(g);
-        } else if (waitingForRespawn) {
+        } 
+        else if (waitingForRespawn) {
             displayMessage(g, "Click to start!");
         }
     }
@@ -203,14 +204,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         }
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (isRunning) {
-            moveBall(); 
-        }
-        repaint();
-    }
-
+    // mouseClicked() respawns ball when waiting for respawn
     @Override
     public void mouseClicked(MouseEvent e) {
         if (waitingForRespawn) {
@@ -222,16 +216,28 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
     }
 
     @Override
-    public void mousePressed(MouseEvent e) { }
+    public void mousePressed(MouseEvent e) { 
+    }
 
     @Override
-    public void mouseReleased(MouseEvent e) { }
+    public void mouseReleased(MouseEvent e) { 
+    }
 
     @Override
-    public void mouseEntered(MouseEvent e) { }
+    public void mouseEntered(MouseEvent e) { 
+    }
 
     @Override
-    public void mouseExited(MouseEvent e) { }
+    public void mouseExited(MouseEvent e) { 
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (isRunning) {
+            moveBall(); 
+        }
+        repaint();
+    }
 
     public class MyKeyAdapter extends KeyAdapter {
         @Override
