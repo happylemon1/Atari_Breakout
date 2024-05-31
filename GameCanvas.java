@@ -125,7 +125,6 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         // drawing the bricks
         for (int row = 0; row < bricks.length; row++) {
             for (int col = 0; col < bricks[row].length; col++) {
-                // set brick color and outline
                 if (!bricks[row][col].isDestroyed()) {
                     Brick brick = bricks[row][col];
                     g.setColor(brick.getColor());
@@ -205,7 +204,14 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         }
     }
 
-    // mouseClicked() respawns ball when waiting for respawn
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (isRunning) {
+            moveBall(); 
+        }
+        repaint();
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         if (waitingForRespawn) {
@@ -217,28 +223,16 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
     }
 
     @Override
-    public void mousePressed(MouseEvent e) { 
-    }
+    public void mousePressed(MouseEvent e) { }
 
     @Override
-    public void mouseReleased(MouseEvent e) { 
-    }
+    public void mouseReleased(MouseEvent e) { }
 
     @Override
-    public void mouseEntered(MouseEvent e) { 
-    }
+    public void mouseEntered(MouseEvent e) { }
 
     @Override
-    public void mouseExited(MouseEvent e) { 
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (isRunning) {
-            moveBall(); 
-        }
-        repaint();
-    }
+    public void mouseExited(MouseEvent e) { }
 
     public class MyKeyAdapter extends KeyAdapter {
         @Override
