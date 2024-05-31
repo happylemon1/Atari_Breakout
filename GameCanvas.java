@@ -1,10 +1,9 @@
-// import
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 
-public class GameCanvas extends JPanel implements ActionListener, MouseMotionListener {
+public class GameCanvas extends JPanel implements ActionListener, MouseMotionListener, MouseListener {
     private static final int SCREEN_HEIGHT = 700;
     private static final int SCREEN_WIDTH = 700;
     private BrickLayout brickLayout;
@@ -12,6 +11,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
     private Paddle paddle;
     private Timer timer;
     private boolean isRunning = false;
+    private boolean waitingForRespawn = true; // Flag to check if waiting for respawn
     private int delay = 10;
     private int score = 0;
     private int lives = 3;
@@ -28,7 +28,8 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
-        this.addMouseMotionListener((MouseMotionListener) this);
+        this.addMouseMotionListener(this);
+        this.addMouseListener(this); // Add mouse listener
         JFrame gameFrame = new JFrame("Atari Breakout");
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameFrame.add(this);
@@ -42,8 +43,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
             arcadeFont = Font.createFont(Font.TRUETYPE_FONT, new File("PressStart2P-Regular.ttf")).deriveFont(30f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(arcadeFont);
-        } 
-        catch (IOException | FontFormatException e) {
+        } catch (IOException | FontFormatException e) {
             e.printStackTrace();
             // fallback to default font if custom font fails to load
             arcadeFont = new Font("SansSerif", Font.BOLD, 30);
@@ -54,6 +54,8 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
     // starts game and timer
     public void startGame() {
         isRunning = true;
+        waitingForRespawn = false; // Reset waiting flag
+        ball.respawn(); // Initial ball respawn
         timer = new Timer(delay, this);
         timer.start();
     }
@@ -67,6 +69,8 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
             drawBall(g);
             drawBricks(g);
             displayScore(g);
+        } else if (waitingForRespawn) {
+            displayMessage(g, "Click to start!");
         }
     }
 
@@ -81,27 +85,28 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         for (int i = 1; i < 5; i++) {
             g.drawLine(paddle.getX() + i * 20, paddle.getY(), paddle.getX() + i * 20, paddle.getY() + 10);
         }
-        
     }
 
     public void drawBall(Graphics g) {
         g.setColor(Color.WHITE);
         g.fillOval(ball.getX(), ball.getY(), ball.getRadius() * 2, ball.getRadius() * 2);
-
     }
+
     public void handleCollisions(int x, int y) {
         ball.WallCollision(SCREEN_WIDTH, SCREEN_HEIGHT);
         ball.PaddleCollision(paddle); 
         ball.BrickCollision(brickLayout); 
     }
+
     public void moveBall() {
         if (ball.getNumCollisions() == 4 || ball.getNumCollisions() == 12) {
             ball.increaseSpeed(); 
         }
 
         if (ball.getY() + ball.getRadius() >= SCREEN_HEIGHT) {
-            lives --; 
-            ball.respawn(); 
+            lives--; 
+            waitingForRespawn = true; // Set flag to wait for respawn
+            isRunning = false; // Stop game
             System.out.println(lives);
         }
         int newX = ball.getX() + ball.getdX(); 
@@ -111,19 +116,6 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         ball.setY(newY); 
         
         handleCollisions(newX, newY); 
-        //ball.WallCollision(SCREEN_WIDTH, SCREEN_HEIGHT); 
-        //ball.PaddleCollision(paddle); 
-        
-        /*
-         if (newX <= 0 || newX + ball.getRadius() * 2 >= SCREEN_WIDTH) {
-            ball.setdX(-ball.getdX()); 
-        }
-
-        if (newY <= 0 || newY + ball.getRadius() * 2 >= SCREEN_HEIGHT) {
-            ball.setdY(-ball.getdY()); 
-        }
-         */
-
     }
 
     public void drawBricks(Graphics g) {
@@ -132,7 +124,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         // drawing the bricks
         for (int row = 0; row < bricks.length; row++) {
             for (int col = 0; col < bricks[row].length; col++) {
-                if (bricks[row][col].isDestroyed() != true) {
+                if (!bricks[row][col].isDestroyed()) {
                     Brick brick = bricks[row][col];
                     g.setColor(brick.getColor());
                     g.fillRect(brick.getX(), brick.getY(), brick.getWidth(), brick.getHeight());
@@ -140,36 +132,28 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
                     g.drawRect(brick.getX(), brick.getY(), brick.getWidth(), brick.getHeight());
                 }
                 // if brick is destroyed and score is not counted update score
-                else if (bricks[row][col].scoreCounted() != true) {
+                else if (!bricks[row][col].scoreCounted()) {
                     Color color = bricks[row][col].getColor();
                     // sets brick to score counted
                     bricks[row][col].setScoreCounted(true);
                     // uses if and else if statements to update score according to brick's color
                     if (color.equals(new Color(0, 255, 255))) {
                         score += 1;
-                    }
-                    else if (color.equals(new Color(138, 43, 226))) {
+                    } else if (color.equals(new Color(138, 43, 226))) {
                         score += 2;
-                    }
-                    else if (color.equals(new Color(30, 144, 255))) {
+                    } else if (color.equals(new Color(30, 144, 255))) {
                         score += 3;
-                    }
-                    else if (color.equals(new Color(50, 205, 50))) {
+                    } else if (color.equals(new Color(50, 205, 50))) {
                         score += 4;
-                    }
-                    else if (color.equals(new Color(255, 255, 0))) {
+                    } else if (color.equals(new Color(255, 255, 0))) {
                         score += 5;
-                    }
-                    else if (color.equals(new Color(255, 165, 0))) {
+                    } else if (color.equals(new Color(255, 165, 0))) {
                         score += 6;
-                    }
-                    else if (color.equals(new Color(255, 69, 0))) {
+                    } else if (color.equals(new Color(255, 69, 0))) {
                         score += 7;
-                    }
-                    else if (color.equals(new Color(255, 105, 180))) {
+                    } else if (color.equals(new Color(255, 105, 180))) {
                         score += 8;
                     }
-                
                 }
             }
         }
@@ -183,6 +167,16 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         g.drawString("Score: " + score, 10, metrics.getAscent());
     }
 
+    // displayMessage() shows a message on the screen
+    public void displayMessage(Graphics g, String message) {
+        g.setColor(Color.WHITE);
+        g.setFont(arcadeFont);
+        FontMetrics metrics = g.getFontMetrics();
+        int x = (SCREEN_WIDTH - metrics.stringWidth(message)) / 2;
+        int y = (SCREEN_HEIGHT - metrics.getHeight()) / 2;
+        g.drawString(message, x, y);
+    }
+
     // mouseMoved() updates paddle movement based on mouse movement
     @Override
     public void mouseMoved(MouseEvent e) {
@@ -191,8 +185,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         // makes sure paddle stays in game boundaries
         if (paddle.getX() < 0) {
             paddle.setX(0);
-        } 
-        else if (paddle.getX() + paddle.getWidth() > SCREEN_WIDTH) {
+        } else if (paddle.getX() + paddle.getWidth() > SCREEN_WIDTH) {
             paddle.setX(SCREEN_WIDTH - paddle.getWidth());
         }
     }
@@ -205,20 +198,40 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         // makes sure paddle stays in game boundaries
         if (paddle.getX() < 0) {
             paddle.setX(0);
-        } 
-        else if (paddle.getX() + paddle.getWidth() > SCREEN_WIDTH) {
+        } else if (paddle.getX() + paddle.getWidth() > SCREEN_WIDTH) {
             paddle.setX(SCREEN_WIDTH - paddle.getWidth());
         }
-    } 
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (isRunning) {
             moveBall(); 
         }
-
         repaint();
     }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if (waitingForRespawn) {
+            waitingForRespawn = false;
+            isRunning = true;
+            ball.respawn(); // Respawn the ball
+            timer.restart(); // Restart the timer
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) { }
+
+    @Override
+    public void mouseReleased(MouseEvent e) { }
+
+    @Override
+    public void mouseEntered(MouseEvent e) { }
+
+    @Override
+    public void mouseExited(MouseEvent e) { }
 
     public class MyKeyAdapter extends KeyAdapter {
         @Override
@@ -232,9 +245,6 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
                     paddle.moveRight();
                     break;
             }
-
         }
-
     }
-
 }
