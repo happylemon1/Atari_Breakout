@@ -60,7 +60,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         timer.start();
     }
 
-    // drawing objects
+    // drawing objects based on state of game
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -71,8 +71,15 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
             displayScore(g);
         } 
         else if (waitingForRespawn) {
-            displayMessage(g, "Click to start!");
+            drawPaddle(g);
+            drawBricks(g);
+            displayScore(g);
         }
+        else {
+            displayScore(g);
+            endGame(g);
+        }
+
     }
 
     public void drawPaddle(Graphics g) {
@@ -99,16 +106,27 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         ball.BrickCollision(brickLayout); 
     }
 
+    // moveBall() moves the ball's position based on speed and collisions
     public void moveBall() {
         if (ball.getNumCollisions() == 4 || ball.getNumCollisions() == 12) {
             ball.increaseSpeed(); 
         }
 
+        // checks if ball goes beyond bottom boundary
         if (ball.getY() + ball.getRadius() >= SCREEN_HEIGHT) {
             lives--; 
-            waitingForRespawn = true; // Set flag to wait for respawn
-            isRunning = false; // Stop game
-            System.out.println(lives);
+            // if user runs out of lives, stop the game and timer
+            if (lives == 0) {
+                isRunning = false;
+                timer.stop();
+            }
+            else {
+                // set flag to wait for respawn
+                waitingForRespawn = true;
+                // pause game
+                isRunning = false;
+            }
+
         }
         int newX = ball.getX() + ball.getdX(); 
         int newY = ball.getY() + ball.getdY(); 
@@ -178,6 +196,14 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         g.drawString(message, x, y);
     }
 
+    // endGame() displays end message
+    public void endGame(Graphics g) {
+        g.setColor(Color.RED);
+        g.setFont(arcadeFont);
+        FontMetrics metrics = g.getFontMetrics();
+        g.drawString("Game Over", (SCREEN_WIDTH - metrics.stringWidth("Game Over")) / 2, SCREEN_HEIGHT / 2);
+    }
+
     // mouseMoved() updates paddle movement based on mouse movement
     @Override
     public void mouseMoved(MouseEvent e) {
@@ -217,8 +243,10 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         if (waitingForRespawn) {
             waitingForRespawn = false;
             isRunning = true;
-            ball.respawn(); // Respawn the ball
-            timer.restart(); // Restart the timer
+            // respawn the ball
+            ball.respawn();
+            // restart the timer
+            timer.restart();
         }
     }
 
