@@ -1,9 +1,11 @@
+// import
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 
 public class GameCanvas extends JPanel implements ActionListener, MouseMotionListener, MouseListener {
+    // instance variables
     private static final int SCREEN_HEIGHT = 700;
     private static final int SCREEN_WIDTH = 700;
     private BrickLayout brickLayout;
@@ -11,13 +13,13 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
     private Paddle paddle;
     private Timer timer;
     private boolean isRunning = false;
-    private boolean waitingForRespawn = true; // Flag to check if waiting for respawn
+    private boolean waitingForRespawn = true;
     private int delay = 10;
     private int score = 0;
     private int lives = 3;
-    private int level = 1;
     private Font arcadeFont;
 
+    // constructor
     public GameCanvas(Paddle paddle, Ball ball, BrickLayout brickLayout) {
         this.paddle = paddle;
         this.ball = ball;
@@ -51,7 +53,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
 
     }
 
-    // starts game and timer
+    // startGame() starts game and timer
     public void startGame() {
         isRunning = true;
         waitingForRespawn = false; // Reset waiting flag
@@ -82,6 +84,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
 
     }
 
+    // drawPaddle() draws the paddle
     public void drawPaddle(Graphics g) {
         // drawing paddle
         g.setColor(Color.DARK_GRAY);
@@ -95,15 +98,17 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         }
     }
 
+    // drawBall() draws the ball
     public void drawBall(Graphics g) {
         g.setColor(Color.WHITE);
         g.fillOval(ball.getX(), ball.getY(), ball.getRadius() * 2, ball.getRadius() * 2);
     }
 
+    // handleCollisions() checks for the various collision types
     public void handleCollisions(int x, int y) {
-        ball.WallCollision(SCREEN_WIDTH, SCREEN_HEIGHT);
-        ball.PaddleCollision(paddle); 
-        ball.BrickCollision(brickLayout); 
+        ball.wallCollision(SCREEN_WIDTH, SCREEN_HEIGHT);
+        ball.paddleCollision(paddle); 
+        ball.brickCollision(brickLayout); 
     }
 
     // moveBall() moves the ball's position based on speed and collisions
@@ -128,15 +133,18 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
             }
 
         }
+
+        // updating ball's x and y
         int newX = ball.getX() + ball.getdX(); 
         int newY = ball.getY() + ball.getdY(); 
-
         ball.setX(newX); 
         ball.setY(newY); 
-        
+    
+        // checking for collisions
         handleCollisions(newX, newY); 
     }
 
+    // drawBricks() draws the bricks
     public void drawBricks(Graphics g) {
         // 2D array layout
         Brick[][] bricks = brickLayout.getLayout();
@@ -238,6 +246,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         repaint();
     }
 
+    // mouseClicked() respawns ball if mouse is clicked when waiting for respawn
     @Override
     public void mouseClicked(MouseEvent e) {
         if (waitingForRespawn) {
@@ -250,6 +259,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         }
     }
 
+    // needed overidden methods from MouseListener interface
     @Override
     public void mousePressed(MouseEvent e) { }
 

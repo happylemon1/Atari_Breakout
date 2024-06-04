@@ -1,12 +1,15 @@
+// import
 import java.awt.*;
 
 public class BrickLayout{
+    // instance variables
     private int numRows;
     private int numCols;
     private int width;
     private int height;
     private Brick[][] layout;
 
+    // constructor
     public BrickLayout(int numRows, int numCols, int width, int height) {
         this.numRows = numRows;
         this.numCols = numCols;
@@ -16,6 +19,7 @@ public class BrickLayout{
         initializeLayout();
     }
 
+    // getter methods
     public Brick[][] getLayout() {
         return layout;
     }
@@ -28,6 +32,7 @@ public class BrickLayout{
         return numCols;
     }
 
+    // initalizeLayout() initializes the layout of the bricks in a 2D array of Brick objects
     private void initializeLayout() {
         for (int row = 0; row < numRows; row++) {
             Color color = getRowColor(row);
@@ -39,6 +44,7 @@ public class BrickLayout{
         }
     }
 
+    // getRowColor() returns color based on a row number parameter
     private Color getRowColor(int row) {
         switch (row) {
         case 0: return new Color(255, 105, 180);
@@ -52,6 +58,5 @@ public class BrickLayout{
         default: return new Color(169, 169, 169);
         }
     }
-
 
 }

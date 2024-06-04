@@ -1,6 +1,8 @@
+// import
 import java.awt.*;
 
 public class Brick {
+    // instance variables
     private int x;
     private int y;
     private int width;
@@ -10,6 +12,7 @@ public class Brick {
     private boolean scoreCounted; 
     
 
+    // constructor
     public Brick(int x, int y, int width, int height, Color color) {
         this.x = x;
         this.y = y;
@@ -20,7 +23,7 @@ public class Brick {
         this.scoreCounted = false;
     }
 
-    // Getters and setters for instance variables
+    // getters and setters for instance variables
     public int getX() {
         return x;
     }

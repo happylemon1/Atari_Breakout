@@ -1,7 +1,9 @@
+// import
 import java.awt.*;
 import java.util.Random;
 
 public class Ball {
+    // instance variables
     private int x;
     private int y;
     private int radius; 
@@ -10,9 +12,9 @@ public class Ball {
     private double velocity; 
     private double angle; 
     private int numCollisions = 0;
-    private Random rand = new Random(); // Initialize a Random object
-    private final int INITIAL_SPEED = 4; // Initial speed for dY
-    private final int MAX_SPEED = 10; // Maximum speed cap
+    private Random rand = new Random();
+    private final int INITIAL_SPEED = 4;
+    private final int MAX_SPEED = 10;
 
     // constructor
     public Ball(int x, int y, int radius, int dX, int dY) {
@@ -25,12 +27,11 @@ public class Ball {
         this.angle = Math.atan2(dY, dX);
     }
 
-    // returns x coordinate
+    // getter methods
     public int getX() {
         return x;
     }
 
-    // returns y coordinate
     public int getY() {
         return y;
     }
@@ -51,12 +52,11 @@ public class Ball {
         return numCollisions; 
     }
 
-    // sets x coordinate
+    // setter methods
     public void setX(int x) {
         this.x = x;
     }
 
-    // sets y coordinate
     public void setY(int y) {
         this.y = y;
     }
@@ -90,19 +90,23 @@ public class Ball {
         numCollisions = 0;
     }
 
-    public void WallCollision(int width, int height) {
+    // wallCollision() adjusts balls movement if ball collides with a side boundary
+    public void wallCollision(int width, int height) {
+        // adjusts if balll hits right or left boundary
         if (x - radius <= 0 || x + radius >= width) {
             dX = -dX; 
             angle = Math.atan2(dY, dX);
         }
 
+        // adjusts if ball hits top boundary
         if (y - radius <= 0) {
             dY = -dY; 
             angle = Math.atan2(dY, dX);
         }
     }
 
-    public void PaddleCollision(Paddle p) {
+    // paddleCollision() adjusts ball movement depending on where and how ball hits paddle
+    public void paddleCollision(Paddle p) {
         int ballBottom = y + radius;
         int paddleTop = p.getY(); 
         int paddleLeft = p.getX();
@@ -116,11 +120,13 @@ public class Ball {
         }
     }
 
+    // move() moves ball
     public void move() {
         x += dX; 
         y += dY;
     }
 
+    // increaseSpeed() increases the balls speed
     public void increaseSpeed() {
         double speedMultiplier = 1.1;
         velocity *= speedMultiplier;
@@ -131,8 +137,8 @@ public class Ball {
         dY = (int) (velocity * Math.sin(angle));
     }
 
-    // BrickCollision() uses for loops to check if coordinates of ball are same as coordinates of any brick, then setting its status to destroyed and creating collision
-    public void BrickCollision(BrickLayout brickLayout) {
+    // brickCollision() uses for loops to check if coordinates of ball are same as coordinates of any brick, then setting its status to destroyed and creating collision
+    public void brickCollision(BrickLayout brickLayout) {
         Brick[][] bricks = brickLayout.getLayout();
         for (int row = 0; row < brickLayout.getRows(); row++) {
             for (int col = 0; col < brickLayout.getCols(); col++) {
@@ -154,4 +160,5 @@ public class Ball {
             }
         }
     }
+    
 }
