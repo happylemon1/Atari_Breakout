@@ -70,15 +70,15 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
             drawPaddle(g);
             drawBall(g);
             drawBricks(g);
-            displayScore(g);
+            displayScoreAndLives(g);
         } 
         else if (waitingForRespawn) {
             drawPaddle(g);
             drawBricks(g);
-            displayScore(g);
+            displayScoreAndLives(g);
         }
         else {
-            displayScore(g);
+            displayScoreAndLives(g);
             endGame(g);
         }
 
@@ -186,12 +186,22 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         }
     }
 
-    // displayScore() writes the current score  
-    public void displayScore(Graphics g) {
+    // displayScoreAndLives() writes the current score and number of lives
+    public void displayScoreAndLives(Graphics g) {
+        // drawing score
         g.setColor(Color.WHITE);
         g.setFont(arcadeFont);
         FontMetrics metrics = g.getFontMetrics();
         g.drawString("Score: " + score, 10, metrics.getAscent());
+        // drawing number of lives
+        int circleDiameter = 20;
+        int yPosition = SCREEN_HEIGHT - circleDiameter - 10;
+        g.setColor(new Color(255, 0, 0));
+        // traversing through number of lives and drawing each circle representing each life
+        for (int i = 0; i < lives; i++) {
+            g.fillOval(10 + i * (circleDiameter + 10), yPosition, circleDiameter, circleDiameter);
+        }
+
     }
 
     // displayMessage() shows a message on the screen
@@ -233,7 +243,8 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         // makes sure paddle stays in game boundaries
         if (paddle.getX() < 0) {
             paddle.setX(0);
-        } else if (paddle.getX() + paddle.getWidth() > SCREEN_WIDTH) {
+        } 
+        else if (paddle.getX() + paddle.getWidth() > SCREEN_WIDTH) {
             paddle.setX(SCREEN_WIDTH - paddle.getWidth());
         }
     }
