@@ -69,23 +69,5 @@ public class Paddle {
             x = 0; 
         }
     }
-
-    public void BallCollision(Ball ball) {
-        int ballY = ball.getY() - ball.getRadius(); 
-        int ballX = ball.getX(); 
-
-        if (ballY == getY() && ballX == getX()) {
-            double paddleCenterX = x + width / 2.0; 
-            double paddleCenterY = y + height / 2.0; 
-            double collisionAngle = Math.atan2(y - paddleCenterY, x - paddleCenterX); 
-            double bounceBackAngle = Math.PI - collisionAngle;
-                
-            double velocity = Math.sqrt(ball.getdX() * ball.getdX() + ball.getdY() * ball.getdY()); 
-        
-            ball.setdX((int) (velocity * Math.cos(bounceBackAngle)));
-            ball.setdY((int) (velocity * Math.sin(bounceBackAngle)));
-        }
-            
-    }
     
 }

@@ -14,6 +14,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
     private Timer timer;
     private boolean isRunning = false;
     private boolean waitingForRespawn = true;
+    public boolean gameWon = false;
     private int delay = 10;
     private int score = 0;
     private int lives = 3;
@@ -77,6 +78,10 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
             drawBricks(g);
             displayScoreAndLives(g);
         }
+        else if (gameWon) {
+            displayWinScreen(g);
+            displayScoreAndLives(g);
+        }
         else {
             displayScoreAndLives(g);
             endGame(g);
@@ -113,9 +118,16 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
 
     // moveBall() moves the ball's position based on speed and collisions
     public void moveBall() {
-        if (ball.getNumCollisions() == 4 || ball.getNumCollisions() == 12) {
-            ball.increaseSpeed(); 
+        // checks if game is completed, max score after all bricks broken is 360
+        if (score == 360) {
+            gameWon = true;
+            isRunning = false;
         }
+        
+        // increases speed after certain number of collisions
+        /*if (ball.getNumCollisions() == 4 || ball.getNumCollisions() == 12) {
+            ball.increaseSpeed(); 
+        }*/
 
         // checks if ball goes beyond bottom boundary
         if (ball.getY() + ball.getRadius() >= SCREEN_HEIGHT) {
@@ -212,6 +224,14 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         int x = (SCREEN_WIDTH - metrics.stringWidth(message)) / 2;
         int y = (SCREEN_HEIGHT - metrics.getHeight()) / 2;
         g.drawString(message, x, y);
+    }
+
+    // displayWinScreen() shows a win screen when user beats the game
+    public void displayWinScreen(Graphics g) {
+        g.setColor(Color.GREEN);
+        g.setFont(arcadeFont);
+        FontMetrics metrics = g.getFontMetrics();
+        g.drawString("You Win!", (SCREEN_WIDTH - metrics.stringWidth("You Win!")) / 2, SCREEN_HEIGHT / 2);
     }
 
     // endGame() displays end message

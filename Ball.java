@@ -127,7 +127,7 @@ public class Ball {
     }
 
     // increaseSpeed() increases the balls speed
-    public void increaseSpeed() {
+    /*public void increaseSpeed() {
         double speedMultiplier = 1.1;
         velocity *= speedMultiplier;
         if (velocity > MAX_SPEED) {
@@ -135,7 +135,7 @@ public class Ball {
         }
         dX = (int) (velocity * Math.cos(angle));
         dY = (int) (velocity * Math.sin(angle));
-    }
+    }*/
 
     // brickCollision() uses for loops to check if coordinates of ball are same as coordinates of any brick, then setting its status to destroyed and creating collision
     public void brickCollision(BrickLayout brickLayout) {
@@ -160,5 +160,5 @@ public class Ball {
             }
         }
     }
-    
+
 }
