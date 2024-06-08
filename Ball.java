@@ -116,7 +116,6 @@ public class Ball {
             double collisionPoint = (x - (p.getX() + p.getWidth() / 2.0)) / (p.getWidth() / 2.0);
             angle = collisionPoint * (Math.PI / 4);
             dY = -Math.abs(dY);
-            dX = -Math.abs(dX); 
             y = paddleTop - radius;
         }
     }
