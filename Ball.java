@@ -116,6 +116,7 @@ public class Ball {
             double collisionPoint = (x - (p.getX() + p.getWidth() / 2.0)) / (p.getWidth() / 2.0);
             angle = collisionPoint * (Math.PI / 4);
             dY = -Math.abs(dY);
+            dX = -Math.abs(dX); 
             y = paddleTop - radius;
         }
     }
@@ -127,7 +128,7 @@ public class Ball {
     }
 
     // increaseSpeed() increases the balls speed
-    /*public void increaseSpeed() {
+    public void increaseSpeed() {
         double speedMultiplier = 1.1;
         velocity *= speedMultiplier;
         if (velocity > MAX_SPEED) {
@@ -135,7 +136,7 @@ public class Ball {
         }
         dX = (int) (velocity * Math.cos(angle));
         dY = (int) (velocity * Math.sin(angle));
-    }*/
+    }
 
     // brickCollision() uses for loops to check if coordinates of ball are same as coordinates of any brick, then setting its status to destroyed and creating collision
     public void brickCollision(BrickLayout brickLayout) {

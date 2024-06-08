@@ -125,9 +125,9 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         }
         
         // increases speed after certain number of collisions
-        /*if (ball.getNumCollisions() == 4 || ball.getNumCollisions() == 12) {
+        if (ball.getNumCollisions() == 4 || ball.getNumCollisions() == 12) {
             ball.increaseSpeed(); 
-        }*/
+        }
 
         // checks if ball goes beyond bottom boundary
         if (ball.getY() + ball.getRadius() >= SCREEN_HEIGHT) {
