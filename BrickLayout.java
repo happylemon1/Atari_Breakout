@@ -1,7 +1,16 @@
+/*
+    Jason Jeong, Daniel Qian, Tony Liu
+    6/10/24
+
+    Advanced CS Topics Semester 2 Project
+    BrickLayout class stores the layout and colors of the brick formation.
+
+*/
+
 // import
 import java.awt.*;
 
-public class BrickLayout{
+public class BrickLayout {
     // instance variables
     private int numRows;
     private int numCols;

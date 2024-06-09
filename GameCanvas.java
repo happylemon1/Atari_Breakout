@@ -1,3 +1,12 @@
+/*
+    Jason Jeong, Daniel Qian, Tony Liu
+    6/10/24
+
+    Advanced CS Topics Semester 2 Project
+    GameCanvas class creates the graphics of the game and implements the game logic.
+
+*/
+
 // import
 import javax.swing.*;
 import java.awt.*;
@@ -57,8 +66,10 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
     // startGame() starts game and timer
     public void startGame() {
         isRunning = true;
-        waitingForRespawn = false; // Reset waiting flag
-        ball.respawn(); // Initial ball respawn
+        // reset waiting flag
+        waitingForRespawn = false;
+        // initial ball respawn
+        ball.respawn();
         timer = new Timer(delay, this);
         timer.start();
     }
@@ -123,7 +134,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
             gameWon = true;
             isRunning = false;
         }
-        
+
         // increases speed after certain number of collisions
         if (ball.getNumCollisions() == 4 || ball.getNumCollisions() == 12) {
             ball.increaseSpeed(); 
@@ -242,6 +253,24 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         g.drawString("Game Over", (SCREEN_WIDTH - metrics.stringWidth("Game Over")) / 2, SCREEN_HEIGHT / 2);
     }
 
+    // restartGame() restarts the game
+    public void restartGame() {
+        // resetting score, lives, initial speed
+        score = 0;
+        lives = 3;
+        Brick[][] bricks = brickLayout.getLayout();
+        // traverses layout and sets it back to default where none of blocks are destroyed
+        for (int row = 0; row < bricks.length; row++) {
+            for (int col = 0; col < bricks[row].length; col++) {
+                if (bricks[row][col].isDestroyed()) {
+                    bricks[row][col].setDestroyed(false);
+                }
+            }
+        }
+        startGame();
+
+    }
+
     // mouseMoved() updates paddle movement based on mouse movement
     @Override
     public void mouseMoved(MouseEvent e) {
@@ -313,6 +342,12 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
                     break;
                 case KeyEvent.VK_RIGHT:
                     paddle.moveRight();
+                    break;
+                // if enter button is pressed when game is not running, game restarts
+                case KeyEvent.VK_ENTER:
+                    if ((!isRunning) && (!waitingForRespawn)) {
+                        restartGame();
+                    }
                     break;
             }
         }

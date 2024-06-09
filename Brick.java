@@ -1,3 +1,12 @@
+/*
+    Jason Jeong, Daniel Qian, Tony Liu
+    6/10/24
+
+    Advanced CS Topics Semester 2 Project
+    Brick class defines the characteristics of a brick.
+
+*/
+
 // import
 import java.awt.*;
 

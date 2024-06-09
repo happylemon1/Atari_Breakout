@@ -1,3 +1,12 @@
+/*
+    Jason Jeong, Daniel Qian, Tony Liu
+    6/10/24
+
+    Advanced CS Topics Semester 2 Project
+    AtariBreakout class contains the main() method.
+
+*/
+
 public class AtariBreakout {
     // main() method
     public static void main(String[] args) {

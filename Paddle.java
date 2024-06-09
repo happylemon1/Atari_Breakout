@@ -1,3 +1,12 @@
+/*
+    Jason Jeong, Daniel Qian, Tony Liu
+    6/10/24
+
+    Advanced CS Topics Semester 2 Project
+    Paddle class defines characteristics of a paddle.
+
+*/
+
 public class Paddle {
     // instance variables
     private int x;

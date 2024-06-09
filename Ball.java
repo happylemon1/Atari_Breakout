@@ -1,3 +1,12 @@
+/*
+    Jason Jeong, Daniel Qian, Tony Liu
+    6/10/24
+
+    Advanced CS Topics Semester 2 Project
+    Ball class defines characteristics of ball and how it reacts to different collisions.
+
+*/
+
 // import
 import java.awt.*;
 import java.util.Random;
