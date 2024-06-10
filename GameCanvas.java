@@ -268,6 +268,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
             for (int col = 0; col < bricks[row].length; col++) {
                 if (bricks[row][col].isDestroyed()) {
                     bricks[row][col].setDestroyed(false);
+                    bricks[row][col].setScoreCounted(false);
                 }
             }
         }
@@ -359,7 +360,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
                     break;
             }
         }
-        
+
     }
 
 }
