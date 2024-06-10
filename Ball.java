@@ -103,7 +103,7 @@ public class Ball {
 
     // wallCollision() adjusts balls movement if ball collides with a side boundary
     public void wallCollision(int width, int height) {
-        // adjusts if balll hits right or left boundary
+        // adjusts if ball hits right or left boundary
         if (x - radius <= 0 || x + radius >= width) {
             dX = -dX; 
             angle = Math.atan2(dY, dX);
