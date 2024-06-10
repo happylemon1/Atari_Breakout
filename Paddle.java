@@ -67,6 +67,7 @@ public class Paddle {
         if (x + width > screenWidth) {
             x = screenWidth - width; 
         }
+
     }
 
     // moveLeft() moves the paddle to the left according to the paddle speed
@@ -77,6 +78,7 @@ public class Paddle {
         if (x < 0) {
             x = 0; 
         }
+        
     }
     
 }

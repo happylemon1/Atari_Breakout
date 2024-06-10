@@ -112,6 +112,7 @@ public class Ball {
             dY = -dY; 
             angle = Math.atan2(dY, dX);
         }
+
     }
 
     // paddleCollision() adjusts ball movement depending on where and how ball hits paddle
@@ -127,6 +128,7 @@ public class Ball {
             dY = -Math.abs(dY);
             y = paddleTop - radius;
         }
+
     }
 
     // move() moves ball
@@ -139,9 +141,11 @@ public class Ball {
     public void increaseSpeed() {
         double speedMultiplier = 1.1;
         velocity *= speedMultiplier;
+
         if (velocity > MAX_SPEED) {
             velocity = MAX_SPEED;
         }
+
         dX = (int) (velocity * Math.cos(angle));
         dY = (int) (velocity * Math.sin(angle));
     }
@@ -168,6 +172,7 @@ public class Ball {
                 }
             }
         }
+        
     }
 
 }

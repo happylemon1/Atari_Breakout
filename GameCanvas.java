@@ -112,6 +112,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         for (int i = 1; i < 5; i++) {
             g.drawLine(paddle.getX() + i * 20, paddle.getY(), paddle.getX() + i * 20, paddle.getY() + 10);
         }
+
     }
 
     // drawBall() draws the ball
@@ -135,10 +136,12 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
             isRunning = false;
         }
 
+        /*
         // increases speed after certain number of collisions
         if (ball.getNumCollisions() == 4 || ball.getNumCollisions() == 12) {
             ball.increaseSpeed(); 
         }
+        */
 
         // checks if ball goes beyond bottom boundary
         if (ball.getY() + ball.getRadius() >= SCREEN_HEIGHT) {
@@ -162,9 +165,9 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         int newY = ball.getY() + ball.getdY(); 
         ball.setX(newX); 
         ball.setY(newY); 
-    
         // checking for collisions
         handleCollisions(newX, newY); 
+
     }
 
     // drawBricks() draws the bricks
@@ -207,6 +210,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
                 }
             }
         }
+
     }
 
     // displayScoreAndLives() writes the current score and number of lives
@@ -279,9 +283,11 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         // makes sure paddle stays in game boundaries
         if (paddle.getX() < 0) {
             paddle.setX(0);
-        } else if (paddle.getX() + paddle.getWidth() > SCREEN_WIDTH) {
+        } 
+        else if (paddle.getX() + paddle.getWidth() > SCREEN_WIDTH) {
             paddle.setX(SCREEN_WIDTH - paddle.getWidth());
         }
+
     }
 
     // mouseDragged() updates paddle movement if mouse is dragged
@@ -296,6 +302,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
         else if (paddle.getX() + paddle.getWidth() > SCREEN_WIDTH) {
             paddle.setX(SCREEN_WIDTH - paddle.getWidth());
         }
+
     }
 
     @Override
@@ -317,6 +324,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
             // restart the timer
             timer.restart();
         }
+
     }
 
     // needed overidden methods from MouseListener interface
@@ -351,5 +359,7 @@ public class GameCanvas extends JPanel implements ActionListener, MouseMotionLis
                     break;
             }
         }
+        
     }
+
 }

@@ -51,6 +51,7 @@ public class BrickLayout {
                 layout[row][col] = new Brick(x, y, width, height, color);
             }
         }
+
     }
 
     // getRowColor() returns color based on a row number parameter
@@ -66,6 +67,7 @@ public class BrickLayout {
         case 7: return new Color(0, 255, 255); 
         default: return new Color(169, 169, 169);
         }
+        
     }
 
 }
