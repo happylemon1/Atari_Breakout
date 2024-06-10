@@ -91,7 +91,9 @@ public class Ball {
     public void respawn() {
         setX(350);
         setY(350);
+        // random horizontal speed
         setdX(rand.nextInt(3) + 1 * (rand.nextBoolean() ? 1 : -1));
+        // constant vertical speed
         setdY(INITIAL_SPEED);
         this.velocity = Math.sqrt(dX * dX + dY * dY);
         this.angle = Math.atan2(dY, dX);
@@ -172,7 +174,7 @@ public class Ball {
                 }
             }
         }
-        
+
     }
 
 }
